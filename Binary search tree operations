@@ -1,5 +1,4 @@
-#Insert a node in a binary search tree
-CODE:
+# binary search tree operations
 
 class Node:
     def __init__(self,x):
@@ -28,10 +27,25 @@ class Node:
         if self.right:
             self.right.show()
             
+    def search(self,y):
+        if self.data==x:
+            print("Node is found")
+            return
+        if self.data>y:
+            if self.left:
+                self.left.search(y)
+            else:
+                print("Node is not found:")
+        else:
+            if self.right:
+                self.right.search(y)
+            else:
+                print("Node is not found")
+        
 root=Node(40)
 while True:
     print()
-    print("1.Insert\n2.Show\n3.Exit")
+    print("1.Insert\n2.Show\n3.Search\n4.Exit")
     ch=int(input("Enter your choice"))
     if ch==1:
         x=int(input("Enter element"))
@@ -39,8 +53,12 @@ while True:
     elif ch==2:
         root.show()
     elif ch==3:
+        y=int(input("Enter element to search"))
+        root.search(y)
+    elif ch==4:
         break
     else:
         print("Invalid choice")
     
                 
+            
