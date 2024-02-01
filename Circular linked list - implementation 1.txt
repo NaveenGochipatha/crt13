@@ -1,0 +1,155 @@
+Circular linked list - implementation 1
+Problem
+
+Write a Program to implement circular linked list. If a user enters a negative value, the last node must be pointing to first node.
+
+Input Format
+
+Read elements upto -1
+
+Constraints
+
+1<=n<=10^7
+
+Output Format
+
+print output
+
+Sample Input 0
+
+1
+2
+3
+4
+-1
+Sample Output 0
+
+1
+2
+3
+4
+Sample Input 1
+
+1
+2
+3
+4
+5
+6
+-1
+Sample Output 1
+
+1
+2
+3
+4
+5
+6
+
+
+Code:
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class CircularLinkedList:
+    def __init__(self):
+        self.last = None
+
+    def add_to_empty(self, data):
+        if self.last != None:
+            return self.last
+
+        temp = Node(data)
+        self.last = temp
+        self.last.next = self.last
+        return self.last
+
+    def add_begin(self, data):
+        if self.last == None:
+            return self.add_to_empty(data)
+
+        temp = Node(data)
+        temp.next = self.last.next
+        self.last.next = temp
+        return self.last
+
+    def add_end(self, data):
+        if self.last == None:
+            return self.add_to_empty(data)
+
+        temp = Node(data)
+        temp.next = self.last.next
+        self.last.next = temp
+        self.last = temp
+        return self.last
+
+    def add_after(self, data, item):
+        if self.last == None:
+            return None
+
+        temp = Node(data)
+        p = self.last.next
+        while p:
+            if p.data == item:
+                temp.next = p.next
+                p.next = temp
+                if p == self.last:
+                    self.last = temp
+                return self.last
+            p = p.next
+            if p == self.last.next:
+                break
+        print(item, "not present in the list")
+        return self.last
+
+    def traverse(self):
+        if self.last == None:
+            print("List is empty")
+            return
+
+        p = self.last.next
+        while p:
+            print(p.data)
+            p = p.next
+            if p == self.last.next:
+                break
+
+    def delete_node(self, key):
+        if self.last == None:
+            return None
+
+        if self.last.next == self.last and self.last.data == key:
+            self.last = None
+            return None
+
+        if self.last.next.data == key:
+            self.last.next = self.last.next.next
+            return self.last
+
+        p = self.last.next
+        while p.next != self.last:
+            if p.next.data == key:
+                p.next = p.next.next
+                return self.last
+            p = p.next
+
+        if p.next.data == key:
+            p.next = self.last.next
+            self.last = p
+            return self.last
+
+        print(key, "not found in the list")
+        return self.last
+
+if __name__ == '__main__':
+    cl = CircularLinkedList()
+    while True:
+        data = int(input())
+        if data == -1:
+            break
+        cl.add_end(data)
+    cl.traverse()
+
+
